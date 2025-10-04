@@ -1,4 +1,5 @@
-using DG.Tweening;
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MeleeEnemyController : EnemyController
@@ -11,11 +12,29 @@ public class MeleeEnemyController : EnemyController
     [SerializeField] private float attackDist;
     [SerializeField] private Animator anim;
 
+    public bool isAttacking, isRunning;
+
+    public GameObject chosenAbility;
+    
     private RaycastHit2D _hit;
-    public bool isAttacking;
+    private GameObject _portal;
     
     public override void Update()
     {
+        if (isRunning)
+        {
+            gameObject.layer = LayerMask.NameToLayer("EnemyRun");
+
+            if (!_portal) _portal = PortalManager.Instance.portals.GetRandom();
+
+            _col.isTrigger = true;
+            _rb.gravityScale = 0;
+            _rb.linearVelocity =  Vector2.zero;
+            transform.position = Vector3.MoveTowards(transform.position, _portal.transform.position, speed * .5f * Time.deltaTime);
+            
+            return;
+        }
+        
         if (!IsAttacking)
         {
             base.Update();
@@ -30,7 +49,7 @@ public class MeleeEnemyController : EnemyController
             }
             
             _hit = Physics2D.Raycast(transform.position, transform.right * detectDistance, detectDistance, LayerMask.GetMask("Player"));
-
+            print(_hit.collider);
             if (!_hit.collider) return;
             if (_hit.collider.CompareTag("Player"))
             {
@@ -45,6 +64,21 @@ public class MeleeEnemyController : EnemyController
             {
                 DoAttack();
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (isRunning && other.CompareTag("Staff") && other.TryGetComponent(out Staff staff) && staff.isSwinging)
+        {
+            var player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player.TryGetComponent(out PlayerController pc))
+            {
+                pc.CollectAbility(chosenAbility);
+            }
+            
+            GetComponent<Health>().TakeDamage(100);
         }
     }
 
