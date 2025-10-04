@@ -6,28 +6,41 @@ public class PlayerController : MonoBehaviour
 {
     private static readonly int AnimIsWalking = Animator.StringToHash("IsWalking");
     private static readonly int AnimAttack = Animator.StringToHash("Attack");
+    
     [SerializeField] private float speed, jumpForce;
     [SerializeField] private LayerMask jumpLayer;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private GameObject gfx;
     [SerializeField] private Quaternion positiveRotation, negativeRotation;
     [SerializeField] private Animator anim;
-    
+    [SerializeField] private float maxXSpeed;
     
     private Vector2 _movement;
     private Rigidbody2D _rb;
+    private float _defaultGravityScale;
     
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _defaultGravityScale = _rb.gravityScale;
     }
 
     private void FixedUpdate()
     {
         _rb.AddForce(_movement * speed);
+
+        _rb.linearVelocityX = Mathf.Clamp(_rb.linearVelocityX, -maxXSpeed, maxXSpeed);
         
-        _movement = Vector2.Lerp(_movement, Vector2.zero, Time.fixedDeltaTime);
         anim.SetBool(AnimIsWalking, _rb.linearVelocityX != 0);
+
+        if (_rb.linearVelocityY < 0)
+        {
+            _rb.gravityScale = _defaultGravityScale * 3;
+        }
+        else
+        {
+            _rb.gravityScale = _defaultGravityScale;
+        }
     }
     
     public void OnMove(InputValue value)

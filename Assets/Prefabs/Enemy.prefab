@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 6794899363050045628}
   - component: {fileID: 1850243991566235179}
   - component: {fileID: 4993443484374981585}
+  - component: {fileID: 5066642879207511217}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -211,3 +212,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 5
+--- !u!114 &5066642879207511217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9002405283359778419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c845b074f2430741ac0780dcb137236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyController
+  speed: 0
+  waypoints: []
