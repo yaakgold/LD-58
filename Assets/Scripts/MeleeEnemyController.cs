@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices.ComTypes;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -31,7 +32,12 @@ public class MeleeEnemyController : EnemyController
             _rb.gravityScale = 0;
             _rb.linearVelocity =  Vector2.zero;
             transform.position = Vector3.MoveTowards(transform.position, _portal.transform.position, speed * .5f * Time.deltaTime);
-            
+
+            if (!(Vector3.Distance(transform.position, _portal.transform.position) < .1f)) return;
+            chosenAbility.TryGetComponent(out Ability ability);
+            ItemHolder.Instance.abilityCount++;
+            Destroy(gameObject);
+
             return;
         }
         
@@ -49,7 +55,7 @@ public class MeleeEnemyController : EnemyController
             }
             
             _hit = Physics2D.Raycast(transform.position, transform.right * detectDistance, detectDistance, LayerMask.GetMask("Player"));
-            print(_hit.collider);
+
             if (!_hit.collider) return;
             if (_hit.collider.CompareTag("Player"))
             {
