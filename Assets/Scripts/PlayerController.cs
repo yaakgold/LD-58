@@ -72,6 +72,14 @@ public class PlayerController : MonoBehaviour
         var chosenAbility = _abilities.GetRandom();
         _abilities.Remove(chosenAbility);
 
+        if (!chosenAbility)
+        {
+            // This means I died
+            Destroy(gameObject);
+        
+            return null;
+        }
+        
         if (chosenAbility.TryGetComponent(out Ability abilityComponent))
         {
             abilityComponent.RemoveAbility();

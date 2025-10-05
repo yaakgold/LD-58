@@ -9,7 +9,6 @@ public class MeleeEnemyController : EnemyController
     [SerializeField] private Quaternion positiveRotation, negativeRotation;
     [SerializeField] private float detectDistance;
     [SerializeField] private float attackRange;
-    [SerializeField] private GameObject arm;
     [SerializeField] private float attackDist;
     [SerializeField] private Animator anim;
 
@@ -34,7 +33,6 @@ public class MeleeEnemyController : EnemyController
             transform.position = Vector3.MoveTowards(transform.position, _portal.transform.position, speed * .5f * Time.deltaTime);
 
             if (!(Vector3.Distance(transform.position, _portal.transform.position) < .1f)) return;
-            chosenAbility.TryGetComponent(out Ability ability);
             ItemHolder.Instance.abilityCount++;
             Destroy(gameObject);
 
