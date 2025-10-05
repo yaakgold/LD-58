@@ -18,7 +18,7 @@ public class Health : MonoBehaviour
     public void TakeDamage(int amount)
     {
         _currentHealth -= amount;
-        print(name + " " + _currentHealth);
+
         if (_currentHealth <= 0)
         {
             OnDeath.Invoke();

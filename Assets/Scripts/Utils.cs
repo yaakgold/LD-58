@@ -11,7 +11,7 @@ public static class Utils
 
     public static Vector2 GetRandomInUnitWithDist(float dist = 1)
     {
-        return Random.insideUnitCircle * dist;
+        return Random.insideUnitCircle.normalized * dist;
     }
 
     public static GameObject GetRandom(this List<GameObject> list)

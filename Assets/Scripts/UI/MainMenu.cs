@@ -21,5 +21,10 @@ namespace UI
         {
             pnlInstruction.SetActive(false);
         }
+
+        public void OnQuit()
+        {
+            Application.Quit();
+        }
     }
 }

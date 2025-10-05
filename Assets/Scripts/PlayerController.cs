@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
 {
     private static readonly int AnimIsWalking = Animator.StringToHash("IsWalking");
     private static readonly int AnimAttack = Animator.StringToHash("Attack");
-    
+    private static readonly int Dead = Animator.StringToHash("Dead");
+
     [SerializeField] private float speed, jumpForce, rotSpeed, abilityDisplayDist;
     [SerializeField] private LayerMask jumpLayer;
     [SerializeField] private Transform groundCheck;
@@ -26,7 +27,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 _movement;
     private Rigidbody2D _rb;
     private float _defaultGravityScale;
-    
+    private bool _isDead;
+
     private void Start()
     {
         _abilities = new List<GameObject>();
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_isDead || UIManager.Instance.gameOver) return;
         _rb.AddForce(_movement * speed);
 
         _rb.linearVelocityX = Mathf.Clamp(_rb.linearVelocityX, -maxXSpeed, maxXSpeed);
@@ -71,7 +74,11 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        Destroy(gameObject);
+        _isDead = true;
+        
+        UIManager.Instance.OnPlayerDeath();
+        
+        anim.SetTrigger(Dead);
     }
     
     public void CollectAbility(GameObject ability)
@@ -171,6 +178,11 @@ public class PlayerController : MonoBehaviour
     public void OnInteract(InputValue value)
     {
         LevelManager.Instance.OnPortalEnter(gameObject);
+    }
+
+    public void OnPause(InputValue value)
+    {
+        UIManager.Instance.PauseGameToggle();
     }
 
     public void Knockback(bool isOnRight)

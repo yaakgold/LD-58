@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +10,7 @@ public class BossController : MonoBehaviour
     private static readonly int AttackSpawnEnemies = Animator.StringToHash("SpawnEnemies");
     private static readonly int AttackFly = Animator.StringToHash("Fly");
     private static readonly int AttackReturnToIdle = Animator.StringToHash("ReturnToIdle");
+    private static readonly int Dead = Animator.StringToHash("Dead");
 
     [SerializeField] private Transform leftPlatform, rightPlatform, leftEdge, rightEdge;
     [SerializeField] private float moveSpeed, spawnForce;
@@ -45,7 +47,8 @@ public class BossController : MonoBehaviour
 
     private void OnDeath()
     {
-        Destroy(gameObject);
+        UIManager.Instance.OnPlayerWin();
+        anim.SetTrigger(Dead);
     }
 
     private IEnumerator BetweenTimer(float time)

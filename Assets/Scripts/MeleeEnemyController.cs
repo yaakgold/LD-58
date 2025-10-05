@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices.ComTypes;
+using UI;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,7 +12,6 @@ public class MeleeEnemyController : EnemyController
     [SerializeField] private float attackRange;
     [SerializeField] private float attackDist;
 
-    public Animator anim;
     public bool isAttacking, isRunning, isHurting;
 
     public GameObject chosenAbility;
@@ -21,7 +21,7 @@ public class MeleeEnemyController : EnemyController
     
     public override void Update()
     {
-        if (_isDead) return;
+        if (_isDead || UIManager.Instance.gameOver) return;
         if (isRunning)
         {
             gameObject.layer = LayerMask.NameToLayer("EnemyRun");
