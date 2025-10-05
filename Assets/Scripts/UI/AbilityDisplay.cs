@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -7,6 +8,7 @@ namespace UI
     {
         public SOAbility ability;
         public Tooltip tooltip;
+        public Image image;
         
         public void OnPointerEnter(PointerEventData eventData)
         {

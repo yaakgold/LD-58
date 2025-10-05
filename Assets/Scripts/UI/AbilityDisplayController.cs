@@ -17,6 +17,7 @@ namespace UI
 
             if (go.TryGetComponent(out AbilityDisplay display))
             {
+                display.image.sprite = ability.icon;
                 display.ability = ability;
                 display.tooltip = tooltip;
             }

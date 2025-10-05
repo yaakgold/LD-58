@@ -11,7 +11,7 @@ public class Staff : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!isSwinging || !other.CompareTag("Enemy")) return;
-
+        
         if (other.TryGetComponent(out Health health))
         {
             health.TakeDamage(damage);
