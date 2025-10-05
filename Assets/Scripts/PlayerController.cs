@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
     public void RemoveJump()
     {
         _jumpsRemaining--;
-        _jumpsReset++;
+        _jumpsReset--;
     }
     
     
@@ -166,5 +166,18 @@ public class PlayerController : MonoBehaviour
         if (staff.isSwinging) return;
         staff.isSwinging = true;
         anim.SetTrigger(AnimAttack);
+    }
+
+    public void OnInteract(InputValue value)
+    {
+        LevelManager.Instance.OnPortalEnter(gameObject);
+    }
+
+    public void Knockback(bool isOnRight)
+    {
+        var force =  isOnRight ? Vector2.left : Vector2.right;
+        force.y = .5f;
+        
+        _rb.AddForce(force * 25, ForceMode2D.Impulse);
     }
 }

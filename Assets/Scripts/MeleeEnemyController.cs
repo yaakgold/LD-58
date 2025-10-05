@@ -10,9 +10,9 @@ public class MeleeEnemyController : EnemyController
     [SerializeField] private float detectDistance;
     [SerializeField] private float attackRange;
     [SerializeField] private float attackDist;
-    [SerializeField] private Animator anim;
 
-    public bool isAttacking, isRunning;
+    public Animator anim;
+    public bool isAttacking, isRunning, isHurting;
 
     public GameObject chosenAbility;
     
@@ -61,7 +61,7 @@ public class MeleeEnemyController : EnemyController
                 IsAttacking = true;
             }
         }
-        else
+        else if (_hit && _hit.transform && Vector3.Distance(transform.position, _hit.transform.position) > attackRange)
         {
             transform.position = Vector2.MoveTowards(transform.position, _hit.transform.position, Time.deltaTime);
 
@@ -73,28 +73,27 @@ public class MeleeEnemyController : EnemyController
             {
                 transform.rotation = negativeRotation;
             }
-            
-            if (Vector3.Distance(transform.position, _hit.transform.position) <= attackRange && !isAttacking)
-            {
-                DoAttack();
-            }
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (isRunning && other.CompareTag("Staff") && other.TryGetComponent(out Staff staff) && staff.isSwinging)
+        else if (!isAttacking)
         {
-            var player = GameObject.FindGameObjectWithTag("Player");
-
-            if (player.TryGetComponent(out PlayerController pc))
-            {
-                pc.CollectAbility(chosenAbility);
-            }
-            
-            GetComponent<Health>().TakeDamage(100);
+            DoAttack();
         }
     }
+
+    // private void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (isRunning && other.CompareTag("Staff") && other.TryGetComponent(out Staff staff) && staff.isSwinging)
+    //     {
+    //         var player = GameObject.FindGameObjectWithTag("Player");
+    //
+    //         if (player.TryGetComponent(out PlayerController pc))
+    //         {
+    //             pc.CollectAbility(chosenAbility);
+    //         }
+    //         
+    //         GetComponent<Health>().TakeDamage(100);
+    //     }
+    // }
 
     private void DoAttack()
     {

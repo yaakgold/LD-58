@@ -8,9 +8,11 @@ public class Ability : MonoBehaviour
     public bool isUsed;
     public PlayerController player;
 
+    [HideInInspector] public RandomItemSpawner spawner;
+    
     [SerializeField] private Collider2D col;
     [SerializeField] private SpriteRenderer gfx;
-
+    
     private void Start()
     {
         gfx.sprite = ability.icon;
@@ -30,6 +32,8 @@ public class Ability : MonoBehaviour
         player = pc;
         
         pc.CollectAbility(gameObject);
+        
+        StartCoroutine(spawner.Respawn());
     }
     
     public virtual void UseAbility()

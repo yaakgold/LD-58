@@ -43,6 +43,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Update()
     {
+        if (_isDead) return;
         if (Vector3.Distance(transform.position, waypoints[WaypointIndex].position) < 0.1f)
             WaypointIndex = (WaypointIndex + 1) % waypoints.Length;
         transform.position = Vector3.MoveTowards(transform.position, waypoints[WaypointIndex].position, speed * Time.deltaTime);
@@ -50,25 +51,8 @@ public class EnemyController : MonoBehaviour
 
     private void OnDeath()
     {
-        _isDead = true;
-        gfx.SetActive(false);
-        StartCoroutine(WaitToRespawn(Random.Range(10,25)));
-    }
-
-    private IEnumerator WaitToRespawn(int time)
-    {
-        yield return new WaitForSeconds(time);
-        
-        var go = Instantiate(selfPref, _startPos, Quaternion.identity);
-        if (go.TryGetComponent(out EnemyController ec))
-        {
-            ec.GetWaypoint(0).position = waypoints[0].position;
-            ec.GetWaypoint(1).position = waypoints[1].position;
-            
-            Destroy(waypoints[0].gameObject);
-            Destroy(waypoints[1].gameObject);
-        }
-        
+        Destroy(waypoints[0].gameObject);
+        Destroy(waypoints[1].gameObject);
         Destroy(gameObject);
     }
 }

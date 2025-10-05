@@ -10,6 +10,7 @@ public class Portal : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             text.SetActive(true);
+            LevelManager.Instance.isPortalActive = true;
         }
     }
 
@@ -18,6 +19,7 @@ public class Portal : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             text.SetActive(false);
+            LevelManager.Instance.isPortalActive = false;
         }
     }
 }

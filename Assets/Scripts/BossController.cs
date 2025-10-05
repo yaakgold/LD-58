@@ -25,8 +25,10 @@ public class BossController : MonoBehaviour
 
     private void Start()
     {
+        GetComponent<Health>().OnDeath.AddListener(OnDeath);
         _useLeftPlatform = true;
-        DoFlyAttack();
+
+        BetweenTimerVar = StartCoroutine(BetweenTimer(4));
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -41,6 +43,11 @@ public class BossController : MonoBehaviour
         }
     }
 
+    private void OnDeath()
+    {
+        Destroy(gameObject);
+    }
+
     private IEnumerator BetweenTimer(float time)
     {
         yield return new WaitForSeconds(time);
@@ -48,7 +55,7 @@ public class BossController : MonoBehaviour
         ChooseNextAttack();
     }
 
-    public void ChooseNextAttack()
+    private void ChooseNextAttack()
     {
         var randomChance = Random.Range(0.0f, 1.0f);
 
@@ -89,7 +96,7 @@ public class BossController : MonoBehaviour
             yield return new WaitForSeconds(.2f);
         }
         
-        BetweenTimerVar = StartCoroutine(BetweenTimer(10));
+        BetweenTimerVar = StartCoroutine(BetweenTimer(4));
     }
     #endregion
     
@@ -110,7 +117,7 @@ public class BossController : MonoBehaviour
             .OnComplete(() =>
             {
                 isAttacking = true;
-                transform.localPosition = new Vector3(transform.localPosition.x, 2, transform.localPosition.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, 1.25f, transform.localPosition.z);
                 transform.DOMoveX(transform.position.x + (_useLeftPlatform ? 300 : -300), 4)
                     .OnComplete(() =>
                     {
@@ -137,7 +144,7 @@ public class BossController : MonoBehaviour
                             transform.rotation = rot;
                         }
                         transform.DOMoveY(randomSide == 0 ? leftPlatform.position.y : rightPlatform.position.y, 4)
-                            .OnComplete(() => BetweenTimerVar = StartCoroutine(BetweenTimer(10)));
+                            .OnComplete(() => BetweenTimerVar = StartCoroutine(BetweenTimer(4)));
                     });
             });
     }
