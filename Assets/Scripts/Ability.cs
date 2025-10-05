@@ -4,11 +4,17 @@ using Random = System.Random;
 
 public class Ability : MonoBehaviour
 {
-    public bool isOneTime;
+    public SOAbility ability;
     public bool isUsed;
     public PlayerController player;
 
     [SerializeField] private Collider2D col;
+    [SerializeField] private SpriteRenderer gfx;
+
+    private void Start()
+    {
+        gfx.sprite = ability.icon;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

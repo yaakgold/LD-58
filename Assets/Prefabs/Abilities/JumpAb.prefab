@@ -136,10 +136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39dc260aabeea40629462367c45910c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.JumpAb
-  isOneTime: 1
+  ability: {fileID: 11400000, guid: 5d11e26cdd72d725ea86e274b94184e3, type: 2}
   isUsed: 0
   player: {fileID: 0}
   col: {fileID: 134126351040347809}
+  gfx: {fileID: 7269560928332796219}
   jumpAdd: 2
 --- !u!58 &134126351040347809
 CircleCollider2D:

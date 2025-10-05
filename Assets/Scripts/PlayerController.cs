@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
 
         if (ability.TryGetComponent(out Ability abilityComponent))
         {
+            AbilityDisplayController.Instance.AddAbility(abilityComponent.ability);
             abilityComponent.UseAbility();
         }
     }
@@ -82,6 +84,7 @@ public class PlayerController : MonoBehaviour
         
         if (chosenAbility.TryGetComponent(out Ability abilityComponent))
         {
+            AbilityDisplayController.Instance.RemoveAbility(abilityComponent.ability);
             abilityComponent.RemoveAbility();
         }
         
