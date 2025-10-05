@@ -16,6 +16,8 @@ public class EnemyController : MonoBehaviour
     
     private void Start()
     {
+        speed += Random.Range(-0.1f,0.2f);
+        
         foreach (var waypoint in waypoints)
         {
             waypoint.parent = null;

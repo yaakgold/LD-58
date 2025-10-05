@@ -152,23 +152,10 @@ public class PlayerController : MonoBehaviour
             _rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
-    
-    // public void OnJumpSmall(InputValue value)
-    // {
-    //     var hit = Physics2D.CircleCast(groundCheck.position, .1f, Vector2.down, .5f,  jumpLayer);
-    //     if (hit.collider != null)
-    //     {
-    //         _rb.AddForce(Vector2.up * jumpForce * .5f, ForceMode2D.Impulse);
-    //     }
-    //     else if (_jumpsRemaining > 0)
-    //     {
-    //         _jumpsRemaining = Mathf.Max(0, _jumpsRemaining - 1);
-    //         _rb.AddForce(Vector2.up * jumpForce * .5f, ForceMode2D.Impulse);
-    //     }
-    // }
 
     public void OnAttack(InputValue value)
     {
+        if (staff.isSwinging) return;
         staff.isSwinging = true;
         anim.SetTrigger(AnimAttack);
     }

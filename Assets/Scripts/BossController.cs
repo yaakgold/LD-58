@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BossController : MonoBehaviour
 {
     private static readonly int AttackSpawnEnemies = Animator.StringToHash("SpawnEnemies");
-    
+    private static readonly int AttackFly = Animator.StringToHash("Fly");
+    private static readonly int AttackReturnToIdle = Animator.StringToHash("ReturnToIdle");
+
     [SerializeField] private Transform leftPlatform, rightPlatform, leftEdge, rightEdge;
     [SerializeField] private float moveSpeed, spawnForce;
     [SerializeField] private int enemyCount;
@@ -13,13 +17,52 @@ public class BossController : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Animator anim;
     
+    public Coroutine BetweenTimerVar;
+    public bool isAttacking;
+    
     private bool _isFlying;
+    private bool _useLeftPlatform;
 
     private void Start()
     {
-        anim.SetTrigger(AttackSpawnEnemies);
+        _useLeftPlatform = true;
+        DoFlyAttack();
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!isAttacking) return;
+
+        if (!other.CompareTag("Player")) return;
+
+        if (other.TryGetComponent(out PlayerController player))
+        {
+            player.LoseAbility(gameObject);
+        }
+    }
+
+    private IEnumerator BetweenTimer(float time)
+    {
+        yield return new WaitForSeconds(time);
+        
+        ChooseNextAttack();
+    }
+
+    public void ChooseNextAttack()
+    {
+        var randomChance = Random.Range(0.0f, 1.0f);
+
+        if (randomChance < 0.5f) // Do Spawn Enemies
+        {
+            anim.SetTrigger(AttackSpawnEnemies);
+        }
+        else // Do fly attack
+        {
+            DoFlyAttack();
+        }
+    }
+    
+    #region Spawn Enemy Attack
     public void DoSpawnEnemyAttack()
     {
         StartCoroutine(SpawnEnemies());
@@ -45,5 +88,58 @@ public class BossController : MonoBehaviour
             
             yield return new WaitForSeconds(.2f);
         }
+        
+        BetweenTimerVar = StartCoroutine(BetweenTimer(10));
     }
+    #endregion
+    
+    #region Fly Attack
+
+    private void DoFlyAttack()
+    {
+        StartCoroutine(HandleFlyAttack());
+    }
+
+    private IEnumerator HandleFlyAttack()
+    {
+        anim.SetTrigger(AttackFly);
+        
+        yield return new WaitForSeconds(.6f);
+        
+        transform.DOMoveX(transform.position.x + (_useLeftPlatform ? -100 : 100), .75f)
+            .OnComplete(() =>
+            {
+                isAttacking = true;
+                transform.localPosition = new Vector3(transform.localPosition.x, 2, transform.localPosition.z);
+                transform.DOMoveX(transform.position.x + (_useLeftPlatform ? 300 : -300), 4)
+                    .OnComplete(() =>
+                    {
+                        anim.SetTrigger(AttackReturnToIdle);
+                        isAttacking = false;
+                        var randomSide = Random.Range(0, 2);
+                        transform.position = new Vector3(
+                            randomSide == 0 ? leftPlatform.position.x : rightPlatform.position.x, 
+                            (randomSide == 0 ? leftPlatform.position.y : rightPlatform.position.y) + 100,
+                            transform.position.z);
+
+                        if (randomSide == 0)
+                        {
+                            _useLeftPlatform = false;
+                            var rot = transform.rotation;
+                            rot.y = 180;
+                            transform.rotation = rot;
+                        }
+                        else
+                        {
+                            _useLeftPlatform = true;
+                            var rot = transform.rotation;
+                            rot.y = 0;
+                            transform.rotation = rot;
+                        }
+                        transform.DOMoveY(randomSide == 0 ? leftPlatform.position.y : rightPlatform.position.y, 4)
+                            .OnComplete(() => BetweenTimerVar = StartCoroutine(BetweenTimer(10)));
+                    });
+            });
+    }
+    #endregion
 }

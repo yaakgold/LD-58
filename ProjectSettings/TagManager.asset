@@ -8,6 +8,7 @@ TagManager:
   - Portal
   - Border
   - Staff
+  - Dragon
   layers:
   - Default
   - TransparentFX

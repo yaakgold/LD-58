@@ -64,6 +64,15 @@ public class MeleeEnemyController : EnemyController
         {
             transform.position = Vector2.MoveTowards(transform.position, _hit.transform.position, Time.deltaTime);
 
+            if (transform.position.x < _hit.transform.position.x)
+            {
+                transform.rotation = positiveRotation;
+            }
+            else if (transform.position.x > _hit.transform.position.x)
+            {
+                transform.rotation = negativeRotation;
+            }
+            
             if (Vector3.Distance(transform.position, _hit.transform.position) <= attackRange && !isAttacking)
             {
                 DoAttack();
