@@ -6,18 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="145c207f-17e7-4471-9afd-068226bddae4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LD58/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LD58/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Player/GFX.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Player/GFX.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Player/Swing.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Player/Swing.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/AbilityDisplay.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/AbilityDisplay.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/Dragon.psb.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Images/Dragon.psb.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Staff.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Staff.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/AbilityDisplay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/AbilityDisplay.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/AbilityDisplayController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/AbilityDisplayController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main Game.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main Game.unity.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +123,7 @@
       <workItem from="1759551783714" duration="3464000" />
       <workItem from="1759597223464" duration="17877000" />
       <workItem from="1759629290870" duration="4731000" />
+      <workItem from="1759643147205" duration="2728000" />
     </task>
     <servers />
   </component>

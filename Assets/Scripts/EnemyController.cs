@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
@@ -11,12 +12,16 @@ public class EnemyController : MonoBehaviour
     protected Collider2D _col;
     protected Rigidbody2D _rb;
 
+    public Transform GetWaypoint(int index) => waypoints[index];
+    
     private void Start()
     {
         foreach (var waypoint in waypoints)
         {
             waypoint.parent = null;
         }
+        
+        WaypointIndex = Random.Range(0, waypoints.Length);
         
         _col = GetComponent<Collider2D>();
         _rb = GetComponent<Rigidbody2D>();
