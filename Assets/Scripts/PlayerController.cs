@@ -63,8 +63,17 @@ public class PlayerController : MonoBehaviour
         {
             _jumpsRemaining = _jumpsReset;
         }
+        else if (other.gameObject.CompareTag("Border"))
+        {
+            Die();
+        }
     }
 
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
+    
     public void CollectAbility(GameObject ability)
     {
         _abilities.Add(ability);
@@ -87,9 +96,8 @@ public class PlayerController : MonoBehaviour
 
         if (!chosenAbility)
         {
-            // This means I died
-            Destroy(gameObject);
-        
+            Die();
+            
             return null;
         }
         

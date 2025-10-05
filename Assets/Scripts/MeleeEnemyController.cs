@@ -21,6 +21,7 @@ public class MeleeEnemyController : EnemyController
     
     public override void Update()
     {
+        if (_isDead) return;
         if (isRunning)
         {
             gameObject.layer = LayerMask.NameToLayer("EnemyRun");
@@ -34,8 +35,8 @@ public class MeleeEnemyController : EnemyController
 
             if (!(Vector3.Distance(transform.position, _portal.transform.position) < .1f)) return;
             ItemHolder.Instance.abilityCount++;
-            Destroy(gameObject);
-
+            health.TakeDamage(100);
+            
             return;
         }
         
